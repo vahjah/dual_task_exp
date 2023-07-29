@@ -1,12 +1,3 @@
-"""
-Master Computing and Innovation
-MCI-Projects-2023
-Developing and application for cognitive research
-
-Richard Hill (a1756449), Vahid Jahangirov (a1845737), Hanbo Pu (a1807267)
-
-"""
-
 # -***- The main.py file generates the DiViDu-next graphical user interface and is the is the execution script for the program -***-
 
 import tkinter as tk

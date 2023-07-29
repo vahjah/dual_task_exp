@@ -1,12 +1,3 @@
-"""
-Master Computing and Innovation
-MCI-Projects-2023
-Developing and application for cognitive research
-
-Richard Hill (a1756449), Vahid Jahangirov (a1845737), Hanbo Pu (a1807267)
-
-"""
-
 import tkinter as tk
 import time
 import random
