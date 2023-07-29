@@ -1,5 +1,3 @@
-# -***- The integrated.py file sets up the experiment window integrates the primary and seconsary task and manages the experiment primary task and collection of data -***-
-
 import tkinter as tk
 import time
 import random
@@ -225,20 +223,14 @@ class DualTaskExperiment(tk.Tk):
             current_time = time.time()
             self.word_times.append(current_time - self.start_time)
             self.start_time = current_time
-            
             if self.game_type == "reaction_click":
-                # Destroy the current game
-                if hasattr(self, 'reaction_click_game'):
-                    self.reaction_click_game.destroy()
-                # Create a new instance of the game after a small delay
-                self.master.after(100, self.setup_reaction_click_game)
                 self.reaction_click_game.events.append(("New word shown", current_time, None, self.word_list[self.word_index]))
-                self.reaction_click_game.reset()
-                    
+            elif self.game_type == "red_button":
+                self.red_button_game.events.append(("New word shown", current_time, None, self.word_list[self.word_index]))
             elif self.game_type == "color_match":
                 self.color_match_game.events.append(("New word shown", current_time, None, self.word_list[self.word_index]))
             self.word_index += 1
-
+  
         if self.word_index == self.break_after and not self.on_break:
             self.game_frame.grid_remove()
             self.word_frame.grid_remove()
@@ -247,18 +239,21 @@ class DualTaskExperiment(tk.Tk):
             return
 
         elif self.word_index == self.num_words:
-            self.word_label.config(text="Finished!")
+            # If the user has already been shown all the words, show "Finished!" when they press to see the next word
+            # self.reaction_click_game.events.append(("New word shown", current_time, None, self.word_list[self.word_index]))
+            self.word_index += 1
+        elif self.word_index == self.num_words + 1:
+            # If the user presses to see the next word after all the words have been shown and "Finished!" has been displayed, show the finish message
             self.show_finish_message()
             print("Times between words:", [self.word_times[i] - self.word_times[i - 1] for i in range(1, len(self.word_times))])
-            self.word_index += 1
-
             if self.game_type != "snake":  
                 self.stop_recording_and_save()
                 self.export_events_to_csv() 
+
     
     # The start_recording method starts recording audio using the sounddevice library.
     def start_recording(self):
-        self.recording = sd.rec(int(self.samplerate * 20 * self.num_words), samplerate=self.samplerate, channels=1, blocking=False)
+        self.recording = sd.rec(int(self.samplerate * 5 * self.num_words), samplerate=self.samplerate, channels=1, blocking=False)
 
     # The stop_recording_and_save method stops the audio recording and saves the recording as a WAV file.
     def stop_recording_and_save(self):
@@ -362,4 +357,3 @@ class DualTaskExperiment(tk.Tk):
     def increment_click_count(self):
         self.click_count += 1
         self.click_label.config(text=f"Clicks: {self.click_count}")
-

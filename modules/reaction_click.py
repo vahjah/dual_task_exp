@@ -48,8 +48,9 @@ class ReactionClickGame(tk.Frame):
     #The schedule_reaction_click_button function schedules the appearance of the reaction click 
     # button with a random delay within the specified limits.
     def schedule_reaction_click_button(self):
-        delay = random.uniform(self.delay_lowlimit, self.delay_highlimit)
-        self.timer_id = self.master.after(int(delay * 1000), self.show_reaction_click_button)
+        if self.winfo_exists():
+            delay = random.uniform(self.delay_lowlimit, self.delay_highlimit)
+            self.timer_id = self.master.after(int(delay * 1000), self.show_reaction_click_button)
 
     def reset(self):
         if self.timer_id:
@@ -71,9 +72,6 @@ class ReactionClickGame(tk.Frame):
         elif self.reaction_click_button.winfo_viewable() and event.keysym == self.key_press:
             print("Correct key pressed.")
             self.reaction_click()
-
-    
-
 
     # the show_reaction_click_button function shows the reaction click button on the screen. 
     # The size and position of the button are determined based on the game settings. 
