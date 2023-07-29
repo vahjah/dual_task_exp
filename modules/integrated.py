@@ -82,9 +82,8 @@ class DualTaskExperiment(tk.Tk):
         self.game_frame_width = self.game_frame.winfo_width()
         self.game_frame_height = self.game_frame.winfo_height()
 
-        if self.game_type == "reaction_click":
-            self.setup_reaction_click_game()
-        elif self.game_type == "color_match":
+        
+        if self.game_type == "color_match":
             self.setup_color_match_game()
         elif self.game_type == "snake":
             self.setup_snake_game()
@@ -215,8 +214,10 @@ class DualTaskExperiment(tk.Tk):
     # The show_next_word method updates the word label with the next word from the word list. 
     # It also records the time between words and handles breaks and the end of the experiment.
     def show_next_word(self, event):
-        if not self.first_space_key_press:
+        if self.game_type == "reaction_click" and not self.first_space_key_press:
+            self.setup_reaction_click_game()
             self.first_space_key_press = True
+
 
         if self.word_index < self.num_words:
             self.word_label.config(text=self.word_list[self.word_index])
@@ -253,7 +254,7 @@ class DualTaskExperiment(tk.Tk):
     
     # The start_recording method starts recording audio using the sounddevice library.
     def start_recording(self):
-        self.recording = sd.rec(int(self.samplerate * 5 * self.num_words), samplerate=self.samplerate, channels=1, blocking=False)
+        self.recording = sd.rec(int(self.samplerate * 20 * self.num_words), samplerate=self.samplerate, channels=1, blocking=False)
 
     # The stop_recording_and_save method stops the audio recording and saves the recording as a WAV file.
     def stop_recording_and_save(self):
