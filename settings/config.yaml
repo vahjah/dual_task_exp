@@ -1,0 +1,28 @@
+reaction_click_settings:
+  button_color: "red"
+  button_size: "medium"
+  delay_lowlimit: 1
+  delay_highlimit: 5
+  key_press: "l"
+  fix_centre: 0
+
+snake_settings:
+  snake_speed: 10
+  initial_length: 3
+  food_color: "red"
+
+color_match_settings:
+  num_colors: 5
+  color_duration: 3
+  score_increment: 10
+
+word_settings:
+  word_size: 25
+
+window_settings:
+  Welcome_message: To start the experiment press enter. Press chosen key to reveal each new word and as each word displays please describe its meaning as clearly as you can. 
+  next_word_key: "<space>"
+  p_task_side: "left"
+  break_after: 15
+
+
