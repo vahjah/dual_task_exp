@@ -74,6 +74,7 @@ class DualTaskExperiment(tk.Tk):
         self.on_break = False
         self.intro_message = None
         self.master.bind('<Return>', self.start_experiment)
+        self.master.bind('t', self.show_break_message)
 
     # The setup_game method sets up the game based on the game_type provided. 
     # It creates different game objects (ReactionClickGame, RedButtonGame, ColorMatchGame, SnakeGame) 
@@ -132,7 +133,7 @@ class DualTaskExperiment(tk.Tk):
 
     # The show_break_message fuction creates a pop-up window
     # to display a message during breaks 
-    def show_break_message(self):
+    def show_break_message(self, event=None):
         
         break_window = tk.Toplevel(self.master)
         break_window_width = int(self.master.winfo_screenwidth() / 2)
@@ -140,9 +141,11 @@ class DualTaskExperiment(tk.Tk):
         break_window.geometry(f"{break_window_width}x{break_window_height}")
         break_window.resizable(False, False)
         break_window.title("Take a Break")
-        break_label = tk.Label(break_window, text="Time for a break, press return to continue when instructed",font=("Arial", 25),wraplength=400)
+        break_label = tk.Label(break_window, text="Time for a break, press any key to continue",font=("Arial", 25),wraplength=400)
         break_label.pack(padx=20,pady=100)
-        break_window.bind("<Return>", lambda event: break_window.destroy())
+        
+        # close the break_window and resume the experiment when any key is pressed
+        break_window.bind("<Key>", lambda event: break_window.destroy())
         break_window.focus_set()
 
     # The show_finish_message function creates a pop-up windows 
@@ -254,7 +257,7 @@ class DualTaskExperiment(tk.Tk):
     
     # The start_recording method starts recording audio using the sounddevice library.
     def start_recording(self):
-        self.recording = sd.rec(int(self.samplerate * 20 * self.num_words), samplerate=self.samplerate, channels=1, blocking=False)
+        self.recording = sd.rec(int(self.samplerate * 100 * self.num_words), samplerate=self.samplerate, channels=1, blocking=False)
 
     # The stop_recording_and_save method stops the audio recording and saves the recording as a WAV file.
     def stop_recording_and_save(self):
