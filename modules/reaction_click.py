@@ -44,7 +44,9 @@ class ReactionClickGame(tk.Frame):
         #self.master.bind(self.key_press, self.handle_key_press)
         self.master.bind('<Key>', self.handle_key_press)
         self.master.focus_set()
-
+        
+    def hide_button(self):
+        self.reaction_click_button.place_forget()
     #The schedule_reaction_click_button function schedules the appearance of the reaction click 
     # button with a random delay within the specified limits.
     def schedule_reaction_click_button(self):
@@ -78,6 +80,8 @@ class ReactionClickGame(tk.Frame):
     # The button is placed at a fixed center position or at a random position within the game window. 
     # The button's appearance and start time are recorded as game events.
     def show_reaction_click_button(self):
+
+        self.reaction_click_button.place_forget()
         
         if self.button_size == "large":
             button_width = 200
@@ -125,4 +129,6 @@ class ReactionClickGame(tk.Frame):
     # The get_key_press method returns the key that needs to be pressed to trigger the button click event.
     def get_key_press(self):
         return self.key_press    
+ 
+  
  
