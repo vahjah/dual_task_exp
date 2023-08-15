@@ -30,6 +30,7 @@ class ReactionClickGame(tk.Frame):
         self.window_settings = config['window_settings'] 
         self.next_word_key = self.window_settings['next_word_key']
 
+        self.paused = False
 
         super().__init__(master, width=self.width, height=self.height)
         self.master = master
@@ -50,9 +51,18 @@ class ReactionClickGame(tk.Frame):
     #The schedule_reaction_click_button function schedules the appearance of the reaction click 
     # button with a random delay within the specified limits.
     def schedule_reaction_click_button(self):
-        if self.winfo_exists():
+        if not self.paused and self.winfo_exists():
             delay = random.uniform(self.delay_lowlimit, self.delay_highlimit)
             self.timer_id = self.master.after(int(delay * 1000), self.show_reaction_click_button)
+
+    def pause_game(self):
+        self.paused = True
+        if self.timer_id:
+            self.master.after_cancel(self.timer_id)
+
+    def resume_game(self):
+        self.paused = False
+        self.schedule_reaction_click_button()
 
     def reset(self):
         if self.timer_id:
@@ -129,6 +139,4 @@ class ReactionClickGame(tk.Frame):
     # The get_key_press method returns the key that needs to be pressed to trigger the button click event.
     def get_key_press(self):
         return self.key_press    
- 
-  
  
