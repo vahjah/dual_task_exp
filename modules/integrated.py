@@ -151,8 +151,10 @@ class DualTaskExperiment(tk.Tk):
         break_label = tk.Label(break_window, text="Time for a break, press any key to continue",font=("Arial", 25),wraplength=400)
         break_label.pack(padx=20,pady=100)
         
+        self.reaction_click_game.pause_game()
         # close the break_window and resume the experiment when any key is pressed
-        break_window.bind("<Key>", lambda event: break_window.destroy())
+        break_window.bind("<Key>", lambda event: (break_window.destroy(), self.reaction_click_game.resume_game()))
+       
         break_window.focus_set()
 
     # The show_finish_message function creates a pop-up windows 
