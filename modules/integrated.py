@@ -76,6 +76,10 @@ class DualTaskExperiment(tk.Tk):
         self.master.bind('<Return>', self.start_experiment)
         self.master.bind('t', self.show_break_message)
 
+        self.recording_saved = False
+        self.events_saved = False
+
+
     # The setup_game method sets up the game based on the game_type provided. 
     # It creates different game objects (ReactionClickGame, RedButtonGame, ColorMatchGame, SnakeGame) 
     # within the game_frame based on the specified type.
@@ -127,6 +131,8 @@ class DualTaskExperiment(tk.Tk):
         self.word_label = tk.Label(self.word_frame, text="", font=("Arial", self.word_size), bg="#F0F0F0")
         self.word_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
         
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
+
         self.setup_game()
         self.game_frame.grid_remove()
         self.word_frame.grid_remove()
@@ -134,6 +140,7 @@ class DualTaskExperiment(tk.Tk):
     # The show_break_message fuction creates a pop-up window
     # to display a message during breaks 
     def show_break_message(self, event=None):
+        
         
         break_window = tk.Toplevel(self.master)
         break_window_width = int(self.master.winfo_screenwidth() / 2)
@@ -217,10 +224,11 @@ class DualTaskExperiment(tk.Tk):
     # The show_next_word method updates the word label with the next word from the word list. 
     # It also records the time between words and handles breaks and the end of the experiment.
     def show_next_word(self, event):
-        if self.game_type == "reaction_click" and not self.first_space_key_press:
+        if 'reaction_click_game' in self.__dict__:
+            self.reaction_click_game.hide_button()  # Hide the button
+            self.reaction_click_game.reset()
+        else:
             self.setup_reaction_click_game()
-            self.first_space_key_press = True
-
 
         if self.word_index < self.num_words:
             self.word_label.config(text=self.word_list[self.word_index])
@@ -302,6 +310,8 @@ class DualTaskExperiment(tk.Tk):
             print(f"saved here {filepath}")
 
             self.transcribe_audio(filepath) 
+
+        self.recording_saved = True    
     
     # The transcribe_audio method transcribes the audio using the Whisper ASR (Automatic Speech Recognition) library 
     # if available. It saves the transcription as a text file.
@@ -356,8 +366,16 @@ class DualTaskExperiment(tk.Tk):
                 writer.writerow({'Event': event, 'Timestamp': timestamp, 'Reaction Time': reaction_time, 'Word': word})
 
         print("Events exported to events.csv")
+        self.events_saved = True
 
     # The increment_click_count method increments a click count attribute and updates the corresponding label.
     def increment_click_count(self):
         self.click_count += 1
         self.click_label.config(text=f"Clicks: {self.click_count}")
+
+    def on_closing(self):
+        if not self.recording_saved and self.recording is not None:
+            self.stop_recording_and_save()
+        if not self.events_saved and self.game_type != "snake":
+            self.export_events_to_csv()
+        self.master.destroy()
