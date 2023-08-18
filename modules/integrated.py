@@ -42,7 +42,6 @@ class DualTaskExperiment(tk.Tk):
         #window parameters
         self.primary_task_left = True
         
-
         #primary task parameters
         self.word_list = word_list
         self.num_words = num_words
@@ -141,7 +140,6 @@ class DualTaskExperiment(tk.Tk):
     # to display a message during breaks 
     def show_break_message(self, event=None):
         
-        
         break_window = tk.Toplevel(self.master)
         break_window_width = int(self.master.winfo_screenwidth() / 2)
         break_window_height = int(self.master.winfo_screenheight() / 2)
@@ -152,8 +150,9 @@ class DualTaskExperiment(tk.Tk):
         break_label.pack(padx=20,pady=100)
         
         self.reaction_click_game.pause_game()
+        self.stop_recording_and_save()
         # close the break_window and resume the experiment when any key is pressed
-        break_window.bind("<Key>", lambda event: (break_window.destroy(), self.reaction_click_game.resume_game()))
+        break_window.bind("<Key>", lambda event: (break_window.destroy(), self.reaction_click_game.resume_game(), self.start_recording()))
        
         break_window.focus_set()
 
@@ -184,6 +183,7 @@ class DualTaskExperiment(tk.Tk):
         
         if self.on_break:
             self.on_break = False  # End the break
+            self.start_recording()
         else:
             self.start_recording()  # Start recording
 
@@ -307,36 +307,44 @@ class DualTaskExperiment(tk.Tk):
 
             filename = "whole_session_audio.wav"  
             filepath = os.path.join(self.output_dir, filename)  
+
+            # Check if the file already exists and increment a number to the end if it does
+            counter = 1
+            base_filename, file_extension = os.path.splitext(filename)
+            while os.path.exists(filepath):
+                filename = f"{base_filename}_{counter}{file_extension}"
+                filepath = os.path.join(self.output_dir, filename)  
+                counter += 1
+
             wavio.write(filepath, self.recording, self.samplerate, sampwidth=2)
             print(f"Audio saved as {filename}")
             print(f"saved here {filepath}")
 
-            self.transcribe_audio(filepath) 
+            self.transcribe_audio(self.output_dir) 
 
-        self.recording_saved = True    
+        self.recording_saved = True   
     
     # The transcribe_audio method transcribes the audio using the Whisper ASR (Automatic Speech Recognition) library 
     # if available. It saves the transcription as a text file.
-    def transcribe_audio(self, audio_file):
-        #audio_file=audio_file
-        print(f"Received by call {audio_file}")
+    def transcribe_audio(self, directory_path):
         def transcribe():
             if whisper_available:
                 model = wp.load_model("base")
-                print("Transcribing audio...")
-                result = model.transcribe(audio_file)
-                print("Transcription successful!")
-                text = result["text"]
-
-                transcription_filename = "transcription.txt"
-                transcription_filepath = os.path.join(self.output_dir, transcription_filename) 
-                with open(transcription_filepath, "w") as f:
-                    f.write(text)
-                print("Transcription saved as transcription.txt")
+                for audio_file in os.listdir(directory_path):
+                    if audio_file.endswith(".wav"):
+                        filepath = os.path.join(directory_path, audio_file)
+                        print(f"Transcribing audio file: {audio_file} ...")
+                        result = model.transcribe(filepath)
+                        print("Transcription successful!")
+                        text = result["text"]
+                        transcription_filename = audio_file.replace('.wav', '_transcription.txt')
+                        transcription_filepath = os.path.join(directory_path, transcription_filename)
+                        with open(transcription_filepath, "w") as f:
+                            f.write(text)
+                        print(f"Transcription for {audio_file} saved as {transcription_filename}")
             else:
                 print("Warning: whisper module is not available. Skipping transcription.")
 
-        # transcription performed in seperate thread for performance 
         thread = threading.Thread(target=transcribe)
         thread.start()
 
