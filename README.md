@@ -4,6 +4,16 @@
 
 ---
 
+## Installing DiViDu-next onto your machine
+
+- **Installation guide:** You can download the application here: https://drive.google.com/file/d/1A8kg3Ktv9qi6hLaDsx5A0ALAo52yQEkf/view?usp=drive_link.  
+Simply download the zip file, unzip it and then double click on the main.exe icon to run the application.
+
+## How to use Dividu-next
+
+- **User guide:** _These instructions will guide you through the use of DiViDu-next https://github.cs.adelaide.edu.au/MCI-Projects-2023/Team11/tree/main/DividuDocs_
+
+  
 ## What's included in the final code
 
 - **GUI:** _the application launches a modern gui providing a range of settings and functions for the experiment._
@@ -14,15 +24,6 @@
 - **Voice transcription:** _the test participants comments in the audit is also transcribed to a text file._
 - **Report:** _the test subject's reactions are captured in a CSV report along with other time stamped measures._
 - **Portability:** _the application runs across platforms and install files have been created for macOS and windows devices._
-
-## Installing DiViDu-next onto your machine
-
-- **Installation guide:** You can download the application here: https://drive.google.com/file/d/1A8kg3Ktv9qi6hLaDsx5A0ALAo52yQEkf/view?usp=drive_link.  
-Simply download the zip file, unzip it and then double click on the main.exe icon to run the application.
-
-## How to use Dividu-next
-
-- **User guide:** _These instructions will guide you through the use of DiViDu-next https://github.cs.adelaide.edu.au/MCI-Projects-2023/Team11/tree/main/DividuDocs_ 
                            
 ## Developer information 
 - **Building an install package:** _the folder named 'installation' contains code to enable the code to be bundled into an executable package._
