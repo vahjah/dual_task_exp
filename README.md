@@ -17,7 +17,7 @@
 
 ## Installing DiViDu-next onto your machine
 
-- **Installation guide:** _These instructions will guide you through the process of installing and running the DiViDu-next on your local machine https://github.cs.adelaide.edu.au/MCI-Projects-2023/Team11/tree/main/DividuDocs_
+- **Installation guide:** You can download the application here: https://drive.google.com/file/d/1A8kg3Ktv9qi6hLaDsx5A0ALAo52yQEkf/view?usp=drive_link. Simply download the zip file, unzip it and then double click on the main.exe icon to run the application.
 
 ## How to use Dividu-next
 
