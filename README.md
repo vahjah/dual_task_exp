@@ -9,7 +9,7 @@
 - **Installation guide:** You can download the application here: https://drive.google.com/file/d/1A8kg3Ktv9qi6hLaDsx5A0ALAo52yQEkf/view?usp=drive_link.  
 Simply download the zip file, unzip it and then double click on the main.exe icon to run the application.
 
-You can also follow the installation guide here for more details:  
+- You can also follow the installation guide here for more details:  
 https://github.com/vahjah/dual_task_exp/blob/main/installation/Windows%20Installation%20guide.pdf
 
 ## How to use Dividu-next
