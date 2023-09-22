@@ -30,6 +30,6 @@ https://github.com/vahjah/dual_task_exp/blob/main/installation/Windows%20Install
 
 ## Things to note
 
-- **Open Source:** _Transcription of the audio recordings may take a few minutes to appear in the reports folder. 
+- **Open Source:** Transcription of the audio recordings may take a few minutes to appear in the reports folder. 
 - **Open Source:** _DiViDu-next is open source and the code may be downloaded, extended and used in accordance with the open source licence_
 - **Credit:** _DiViDu-next is named as such because the motivation for the project originated from the idea to redevelop a Dual Task Experiment software solution called DiViDu. This software is an open-source solution in Visual Basic created and published by Nina Heck and Moritz Schubotz https://github.com/dividu/dividu_
