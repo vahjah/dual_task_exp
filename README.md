@@ -15,7 +15,7 @@ https://github.com/vahjah/dual_task_exp/blob/main/installation/Windows%20Install
 
 ## How to use Dividu-next
 
-- **User guide:** _These instructions will guide you through the use of DiViDu-next https://github.cs.adelaide.edu.au/MCI-Projects-2023/Team11/tree/main/DividuDocs_
+- **User guide:** _These instructions will guide you through the use of DiViDu-next https://github.com/vahjah/dual_task_exp/blob/main/installation/DiViDu-next%20user%20guide.pdf
 
   
 ## What's included in the final code
